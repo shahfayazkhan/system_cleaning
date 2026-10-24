@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Archive, FolderGit2, Gauge, History, Menu, Settings, ShieldCheck, Sparkles, Trash2, X } from "lucide-react";
+import { Archive, FolderGit2, Gauge, History, KeyRound, Laptop, LogOut, Menu, Settings, ShieldCheck, Sparkles, Trash2, X } from "lucide-react";
+import { useConnection } from "./ConnectionGate";
 import { useState } from "react";
 import { cn, formatBytes } from "@/lib/format";
 import { useApp } from "./providers/AppProvider";
@@ -13,6 +14,7 @@ const NAV = [
   { href: "/projects", label: "Dev Projects", icon: FolderGit2 },
   { href: "/quarantine", label: "Quarantine", icon: Archive },
   { href: "/history", label: "History", icon: History },
+  { href: "/permissions", label: "Permissions", icon: KeyRound },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
@@ -34,6 +36,7 @@ export function Sidebar() {
   const pathname = usePathname();
   const { system } = useApp();
   const [open, setOpen] = useState(false);
+  const connection = useConnection();
   const diskPct = system?.disk ? (system.disk.used / system.disk.total) * 100 : 0;
 
   const content = (
@@ -78,6 +81,17 @@ export function Sidebar() {
             <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
               <div className={cn("h-full rounded-full", diskPct > 90 ? "bg-rose-400" : diskPct > 75 ? "bg-amber-400" : "bg-brand-400")} style={{ width: `${diskPct}%` }} />
             </div>
+          </div>
+        )}
+        {connection && (
+          <div className="flex items-center justify-between gap-2 rounded-xl border border-white/5 bg-ink-850 p-3 text-[11px] text-slate-300">
+            <span className="flex min-w-0 items-center gap-2">
+              <Laptop className="h-4 w-4 shrink-0 text-brand-300" />
+              <span className="truncate">Connected to {system?.hostname ?? "this computer"}</span>
+            </span>
+            <button onClick={connection.disconnect} className="text-slate-500 hover:text-rose-300" title="Disconnect this dashboard" aria-label="Disconnect">
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         )}
         <div className="flex items-center gap-2 rounded-xl border border-brand-500/15 bg-brand-500/[0.06] p-3 text-[11px] leading-snug text-brand-100/80">
