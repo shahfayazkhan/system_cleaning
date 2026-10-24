@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 import { cn, formatBytes, formatDuration, timeAgo } from "@/lib/format";
 import type { CategoryId, HistoryEntry } from "@/lib/types";
 import { CleanDialog } from "@/components/CleanDialog";
+import { PermissionBanner } from "@/components/PermissionBanner";
 import { useApp } from "@/components/providers/AppProvider";
 import { Button, Progress, Skeleton } from "@/components/ui";
 
@@ -77,6 +78,7 @@ export default function Dashboard() {
 
   return (
     <div className="animate-fade-in space-y-6">
+      <PermissionBanner />
       {/* Hero */}
       <section className="card relative overflow-hidden">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl" />

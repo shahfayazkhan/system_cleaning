@@ -181,3 +181,21 @@ export interface ProjectCacheItem {
 }
 
 export const CONFIRM_PHRASE = "CLEAN";
+
+export type PermissionState = "granted" | "denied" | "unknown" | "optional";
+
+export interface PermissionItem {
+  id: string;
+  title: string;
+  description: string;
+  status: PermissionState;
+  /** true = cleaning works without it, but some locations will be skipped */
+  optional: boolean;
+  action?: { id: string; label: string };
+  help?: string;
+}
+
+export interface PermissionStatus {
+  platform: Platform;
+  items: PermissionItem[];
+}

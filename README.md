@@ -26,13 +26,20 @@ Some caches, like Safari's, are protected by macOS privacy controls. To clean th
 ### Windows tip
 Windows Temp, Windows Update downloads and CBS logs need Administrator rights. To clean them, run your terminal **as Administrator** before `npm start`. If you don't, those items are skipped safely.
 
-### Deploying to Vercel
-A cloud server can't reach the files on a visitor's computer. So when the app is built on Vercel (it detects `VERCEL=1`, or you can set `CLEAN_CACHE_HOSTED=1`), it turns into an **info and download page**:
+### Hosted dashboard on Vercel + permissions
+Your Vercel deployment is a **remote control** for the CleanCache agent running on your computer. Your browser connects straight to `http://127.0.0.1:4321`, so files never go through the cloud, and Vercel's own `/api/*` stays disabled.
 
-- Every page shows the landing page.
-- Every `/api/*` route returns 403, so the file-system API never runs on the internet.
+On first visit, the dashboard asks for three permissions, each with its own button:
 
-The real cleaner always runs locally with `npm start`.
+1. **Run CleanCache on this computer.** Start it with `npm start`. The page detects it automatically.
+2. **Allow local access.** Your browser asks whether the site may connect to apps on this device. Choose *Allow*. This works in Chrome, Edge, Brave and Firefox. Safari blocks it, so use the local dashboard there.
+3. **Allow access (pairing).** A consent window opens *from your computer*. Click *Allow*, and the dashboard gets a private 256-bit key that only works for that exact website.
+
+The **Permissions** page covers OS-level access:
+
+- **macOS:** *Open System Settings* for Full Disk Access.
+- **Windows:** *Restart as Administrator*, which shows the UAC prompt.
+- **Everyone:** you can revoke connected dashboards there.
 
 ---
 
