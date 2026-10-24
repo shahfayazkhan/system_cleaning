@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { IS_HOSTED } from "@/lib/mode";
 
 /**
  * This app can delete files, so its API must only ever be reachable from THIS computer.
@@ -14,6 +15,14 @@ function hostname(hostHeader: string | null): string {
 }
 
 export function middleware(req: NextRequest) {
+  // Hosted (Vercel): only the info page is served. The file-system API is never exposed on the internet.
+  if (IS_HOSTED) {
+    if (req.nextUrl.pathname.startsWith("/api/")) {
+      return NextResponse.json({ error: "CleanCache must run on your own computer. See the download instructions." }, { status: 403 });
+    }
+    return NextResponse.next();
+  }
+
   const host = hostname(req.headers.get("host"));
   if (!LOCAL_HOSTS.has(host)) {
     return new NextResponse("Clean Cache only accepts connections from this computer.", { status: 403 });

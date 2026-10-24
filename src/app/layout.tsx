@@ -3,6 +3,8 @@ import "./globals.css";
 import { AppProvider } from "@/components/providers/AppProvider";
 import { Sidebar } from "@/components/Sidebar";
 import { Toaster } from "@/components/Toaster";
+import { HostedLanding } from "@/components/HostedLanding";
+import { IS_HOSTED } from "@/lib/mode";
 
 export const metadata: Metadata = {
   title: "CleanCache — Safe Cache Cleaner",
@@ -13,6 +15,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <body style={{ ["--font-sans" as string]: "Inter, 'SF Pro Text', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif" }} className="font-sans">
+        {IS_HOSTED ? (
+          <HostedLanding />
+        ) : (
         <AppProvider>
           <div className="flex min-h-screen">
             <Sidebar />
@@ -22,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
           <Toaster />
         </AppProvider>
+        )}
       </body>
     </html>
   );
