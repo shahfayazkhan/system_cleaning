@@ -26,6 +26,14 @@ Some caches, like Safari's, are protected by macOS privacy controls. To clean th
 ### Windows tip
 Windows Temp, Windows Update downloads and CBS logs need Administrator rights. To clean them, run your terminal **as Administrator** before `npm start`. If you don't, those items are skipped safely.
 
+### Deploying to Vercel
+A cloud server can't reach the files on a visitor's computer. So when the app is built on Vercel (it detects `VERCEL=1`, or you can set `CLEAN_CACHE_HOSTED=1`), it turns into an **info and download page**:
+
+- Every page shows the landing page.
+- Every `/api/*` route returns 403, so the file-system API never runs on the internet.
+
+The real cleaner always runs locally with `npm start`.
+
 ---
 
 ## Features
