@@ -6,7 +6,7 @@ import { body, fail, json } from "@/lib/server/http";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 600;
+export const maxDuration = 300;
 
 /**
  * POST { action: "scan", root }
