@@ -8,7 +8,7 @@ It **never** touches your documents, photos, downloads, installed apps, keychain
 
 ## Quick start
 
-Requires **Node.js 18.18+** (Node 20/22 recommended).
+Requires **Node.js 20 or newer** (the latest LTS is recommended).
 
 ```bash
 npm install
